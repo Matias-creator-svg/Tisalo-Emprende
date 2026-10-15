@@ -968,3 +968,93 @@ body { font-size: 14px; }
     padding: 13px 14px;
   }
 }
+
+/* =========================================================
+   v0.6.0 — CATÁLOGO E INVENTARIO COMPLETO
+   ========================================================= */
+.inventory-v060-table { min-width: 1540px !important; }
+.services-table { min-width: 1120px !important; }
+.inventory-product-cell { display:flex; align-items:center; gap:11px; min-width:250px; }
+.inventory-product-cell > div:last-child { min-width:0; }
+.inventory-thumb { width:48px; height:48px; flex:0 0 48px; border:1px solid #dfe7ea; background:#f2f6f4; display:grid; place-items:center; overflow:hidden; border-radius:5px; color:#6d8a78; }
+.inventory-thumb img { width:100%; height:100%; object-fit:cover; }
+.inventory-thumb svg { width:20px; height:20px; }
+.catalog-row-inactive { opacity:.68; background:#fafafa; }
+.commercial-state { display:inline-flex; align-items:center; min-height:28px; padding:5px 9px; border-radius:999px; font-size:10px; font-weight:800; white-space:nowrap; }
+.commercial-state.active { color:#167a43; background:#e5f4e9; }
+.commercial-state.inactive { color:#78858b; background:#edf0f1; }
+
+#productsTable th:last-child, #productsTable td:last-child { min-width:360px; }
+#productsTable .row-actions-v060 { display:grid !important; grid-template-columns:1fr 1fr; gap:7px !important; width:350px !important; min-width:350px !important; max-width:350px; }
+#productsTable .row-actions-v060 button { width:100% !important; min-width:0 !important; min-height:40px; padding:8px 10px; justify-content:flex-start; overflow:visible; }
+#productsTable .row-actions-v060 .toggle-action { grid-column:1/-1; justify-content:center; }
+.row-actions .neutral-action { border-color:#d7e1e5; background:#f6f8f9; color:#4f626b; }
+.row-actions .toggle-action.danger-soft { border-color:#ead8da; background:#fff5f5; color:#ae3038; }
+.row-actions .toggle-action.success-soft { border-color:#cfe2d6; background:#eef8f1; color:#167943; }
+.row-actions-service { min-width:260px; }
+.row-actions-service button { min-width:118px; }
+.row-actions-service button:last-child { color:inherit; }
+
+.field-with-action { display:grid; grid-template-columns:minmax(0,1fr) 44px; gap:8px; }
+.field-with-action select { min-width:0; }
+.mini-field-action { border:1px solid #d5dfe3; background:#f5f8f9; color:#3d5b68; display:grid; place-items:center; border-radius:4px; }
+.mini-field-action:hover { background:#ecf5ef; color:#087d3d; border-color:#bddbc8; }
+.mini-field-action svg { width:17px; height:17px; }
+.optional-text { color:#89979d; font-size:10px; font-weight:500; }
+
+.image-field-row { display:grid; grid-template-columns:150px minmax(0,1fr); gap:14px; align-items:center; }
+.catalog-image-preview { width:150px; height:105px; border:1px dashed #bfcdd3; background:#f5f8f8; display:grid; place-items:center; align-content:center; gap:6px; overflow:hidden; border-radius:5px; color:#819097; font-weight:600; }
+.catalog-image-preview img { width:100%; height:100%; object-fit:cover; }
+.catalog-image-preview svg { width:24px; height:24px; }
+.catalog-image-preview span { font-size:10px; }
+.image-field-controls { display:grid; gap:7px; align-content:center; }
+.image-field-controls input[type="file"] { padding:8px; min-height:44px; }
+.image-field-controls small { color:#849198; font-size:10px; font-weight:500; line-height:1.45; }
+.text-action { width:max-content; border:0; background:transparent; padding:2px 0; color:#b32731; font-size:11px; font-weight:700; }
+
+.form-note { display:flex; align-items:flex-start; gap:9px; padding:11px 12px; background:#f0f6f2; border-left:3px solid #249156; color:#62736a; font-size:11px; line-height:1.5; }
+.form-note svg { width:17px; height:17px; flex:0 0 17px; color:#198a4c; margin-top:1px; }
+.form-note strong { color:#315642; }
+.movement-modal-v060 { width:min(820px,100%); }
+
+.units-modal { width:min(880px,100%); }
+.units-layout { display:grid; grid-template-columns:290px minmax(0,1fr); gap:18px; padding:20px 22px 24px; }
+.unit-create-card, .units-list-card { border:1px solid #dce5e8; background:#fbfcfc; padding:16px; }
+.unit-create-card { display:grid; gap:12px; align-content:start; }
+.unit-create-card h3 { margin:0 0 2px; font-size:17px; }
+.unit-create-card label { display:grid; gap:6px; color:#3c4f57; font-size:12px; font-weight:700; }
+.unit-create-card input, .unit-create-card select { min-height:43px; width:100%; border:1px solid #d7e1e5; background:white; padding:9px 11px; font-size:12px; }
+.units-list-head { display:flex; align-items:center; justify-content:space-between; gap:10px; margin-bottom:10px; }
+.units-list-head strong { font-size:14px; }
+.units-list-head span { color:#87949a; font-size:11px; }
+.units-list { display:grid; max-height:390px; overflow:auto; border-top:1px solid #e4eaed; }
+.unit-list-row { display:grid; grid-template-columns:minmax(0,1fr) 100px 90px; gap:10px; align-items:center; min-height:54px; border-bottom:1px solid #e7ecee; padding:8px 2px; }
+.unit-list-row strong, .unit-list-row small { display:block; }
+.unit-list-row strong { font-size:12px; color:#33474f; }
+.unit-list-row small { margin-top:2px; font-size:10px; color:#8a969b; }
+.unit-list-row > span { font-size:11px; color:#596c74; }
+.unit-list-row em { font-style:normal; font-size:9px; text-transform:uppercase; letter-spacing:.5px; color:#5c7768; background:#edf5ef; padding:4px 6px; text-align:center; }
+
+.lots-modal { width:min(1050px,100%); }
+.lots-content { padding:18px 20px 22px; }
+.lot-summary { display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin-bottom:14px; }
+.lot-summary article { border:1px solid #dce5e8; border-top:3px solid var(--green); padding:12px; background:#fbfcfc; }
+.lot-summary span, .lot-summary strong, .lot-summary small { display:block; }
+.lot-summary span { color:#7e8c92; font-size:10px; font-weight:700; text-transform:uppercase; }
+.lot-summary strong { color:#2f424a; font-size:22px; margin:6px 0 2px; }
+.lot-summary small { color:#8a979d; font-size:10px; }
+.lots-table { min-width:850px; margin-bottom:14px; }
+.lot-state { display:inline-flex; padding:5px 8px; border-radius:999px; font-size:10px; font-weight:800; white-space:nowrap; }
+.lot-state.active { background:#e4f4e9; color:#187a44; }
+.lot-state.warning { background:#fff1dc; color:#aa6a00; }
+.lot-state.expired { background:#fde5e7; color:#b42630; }
+.lot-state.neutral { background:#edf1f2; color:#68777e; }
+
+@media (max-width:780px) {
+  #productsTable th:last-child, #productsTable td:last-child { min-width:330px; }
+  #productsTable .row-actions-v060 { width:320px !important; min-width:320px !important; max-width:320px; }
+  .image-field-row { grid-template-columns:1fr; }
+  .catalog-image-preview { width:100%; height:160px; }
+  .units-layout { grid-template-columns:1fr; }
+  .lot-summary { grid-template-columns:1fr; }
+}

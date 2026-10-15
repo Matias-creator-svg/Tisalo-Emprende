@@ -3,10 +3,10 @@
   const store = window.TisaleoDemoStore;
   const seedProducts = JSON.parse(document.getElementById('quickSaleProducts')?.textContent || '[]');
   const seedServices = JSON.parse(document.getElementById('quickSaleServices')?.textContent || '[]');
-  let products = store.getProducts(seedProducts).map(p => ({...p, kind:'Producto', id:String(p.id), price:Number(p.price), stock:Number(p.stock)}));
+  let products = store.getProducts(seedProducts).filter(p => p.active !== false).map(p => ({...p, kind:'Producto', id:String(p.id), price:Number(p.price), stock:Number(p.stock)}));
   const today = store.nowParts().date;
   const serviceAvailable = s => (s.status || (s.active === false ? 'Inactivo' : 'Activo')) === 'Activo' && (!s.startDate || s.startDate <= today) && (!s.endDate || s.endDate >= today);
-  let services = store.getServices(seedServices).filter(serviceAvailable).map(s => ({...s, kind:'Servicio', id:String(s.id), price:Number(s.price), stock:null, sku:s.code, sector:s.sector||'Servicios', unit:s.unit||'Servicio'}));
+  let services = store.getServices(seedServices).filter(serviceAvailable).map(s => ({...s, kind:'Servicio', id:String(s.id), price:Number(s.price), stock:null, sku:s.code, sector:s.sector||store.getProfile().sector||'Agropecuario', unit:s.unit||'Servicio'}));
   const cart = new Map(); let activeKind='products'; let category='Todos'; let payment='Efectivo';
 
   const el = id => document.getElementById(id); const grid=el('productGrid'), search=el('catalogSearch'), count=el('catalogCount'), empty=el('catalogEmpty'), categoryTabs=el('categoryTabs'), typeTabs=el('saleTypeTabs'), items=el('ticketItems'), ticketCount=el('ticketProductCount'), subtotalEl=el('subtotalValue'), totalEl=el('totalValue'), paymentOptions=el('paymentOptions'), mixed=el('mixedPayment'), mixedCash=el('mixedCash'), mixedTransfer=el('mixedTransfer');
@@ -50,8 +50,8 @@
   el('completeSale').addEventListener('click',()=>{
     if(!cart.size){toast('Añade al menos un producto o servicio');return;} const total=subtotal(); if(payment==='Mixto'&&Math.abs(Number(mixedCash.value||0)+Number(mixedTransfer.value||0)-total)>.01){toast(`El pago mixto debe sumar ${money(total)}`);return;}
     const saleItems=[]; const saleId=`V-${String(Date.now()).slice(-6)}`;
-    [...cart.values()].forEach(row=>{ const x=row.item; saleItems.push({sku:x.sku||x.code,name:x.name,sector:x.sector,kind:x.kind,quantity:row.qty,unit:x.unit,price:x.price,total:x.price*row.qty}); if(x.kind==='Producto'){const previous=Number(x.stock); const final=previous-row.qty; x.stock=final; store.setStock(x.id,final,seedProducts); store.addMovement({productId:x.id,product:x.name,sku:x.sku,sector:x.sector,type:'Venta',detail:`Venta #${saleId}`,quantity:-row.qty,unit:x.unit,previous,final});} });
-    store.addSale({id:saleId,payment,total,items:saleItems}); products=store.getProducts(seedProducts).map(p=>({...p,kind:'Producto',id:String(p.id),price:Number(p.price),stock:Number(p.stock)})); cart.clear(); renderCatalog(); renderCart(); toast(`Venta ${saleId} registrada por ${money(total)}`);
+    [...cart.values()].forEach(row=>{ const x=row.item; saleItems.push({sku:x.sku||x.code,name:x.name,sector:x.sector,kind:x.kind,quantity:row.qty,unit:x.unit,price:x.price,total:x.price*row.qty}); if(x.kind==='Producto'){const previous=Number(x.stock); const final=previous-row.qty; const allocations=store.consumeLots(x.id,row.qty); const lotDetail=allocations.length?` · Lotes: ${allocations.map(a=>`${a.code} (${a.quantity})`).join(', ')}`:''; x.stock=final; store.setStock(x.id,final,seedProducts); store.addMovement({productId:x.id,product:x.name,sku:x.sku,sector:x.sector,type:'Venta',detail:`Venta #${saleId}${lotDetail}`,quantity:-row.qty,unit:x.unit,previous,final});} });
+    store.addSale({id:saleId,payment,total,items:saleItems}); products=store.getProducts(seedProducts).filter(p=>p.active!==false).map(p=>({...p,kind:'Producto',id:String(p.id),price:Number(p.price),stock:Number(p.stock)})); cart.clear(); renderCatalog(); renderCart(); toast(`Venta ${saleId} registrada por ${money(total)}`);
   });
   renderTabs(); renderCatalog(); renderCart();
 })();
