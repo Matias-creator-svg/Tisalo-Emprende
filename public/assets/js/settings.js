@@ -1,0 +1,6 @@
+(() => {
+ if(!document.getElementById('settingsPage'))return; const store=window.TisaleoDemoStore,$=id=>document.getElementById(id),p=store.getProfile(),m=store.getModules();
+ $('cfgBusinessName').value=p.businessName||'';$('cfgRuc').value=p.ruc||'';$('cfgRepresentative').value=p.representative||'';$('cfgPhone').value=p.phone||'';$('cfgSector').value=p.sector||'Agropecuario';$('cfgAddress').value=p.address||'';$('cfgProductsModule').checked=m.products!==false;$('cfgServicesModule').checked=m.services!==false;
+ $('businessProfileForm').addEventListener('submit',e=>{e.preventDefault();store.saveProfile({businessName:$('cfgBusinessName').value.trim(),ruc:$('cfgRuc').value.trim(),representative:$('cfgRepresentative').value.trim(),phone:$('cfgPhone').value.trim(),sector:$('cfgSector').value,address:$('cfgAddress').value.trim()});window.showToast?.('Perfil del negocio actualizado');});
+ const saveModules=()=>{const next={products:$('cfgProductsModule').checked,services:$('cfgServicesModule').checked};if(!next.products&&!next.services){window.showToast?.('Debes mantener al menos un módulo activo');$('cfgProductsModule').checked=true;next.products=true;}store.saveModules(next);window.showToast?.('Módulos actualizados');}; $('cfgProductsModule').addEventListener('change',saveModules);$('cfgServicesModule').addEventListener('change',saveModules);
+})();
